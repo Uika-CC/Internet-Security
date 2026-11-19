@@ -1,0 +1,12 @@
+http和https的区别：http是数据裸奔，https做了加密保护
+
+https的局限：内容被加密，但是域名，目的ip在握手阶段仍然是明文
+具体例子：wireshark抓包之后把过滤框里输入tls.handshake.type == 1，里面按照**Transport Layer Security → Handshake Protocol → Extension: server_name**。这个顺序，server_name = 之后的那一串就是
+
+cookie：网站存放在浏览器里的数据，下次再访问的时候方便认出你
+
+user_token(claude总结版)：
+
+1. 登录页的 HTML 源码里有一行隐藏的 `<input type='hidden' name='user_token' value='...'>`（在 Wireshark 的 HTTP 流里看到的）
+2. 点登录时，POST 的表单数据里带着同一个值
+3. 你的两次登录里，token 的值不一样（F12 那次是 `444dd4b2…`，Wireshark 那次是 `18be6ce1…`），说明每次打开登录页，服务器都会发一个新的
